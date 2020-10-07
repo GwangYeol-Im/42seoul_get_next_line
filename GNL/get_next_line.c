@@ -6,7 +6,7 @@
 /*   By: gim <gim@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/04 22:03:58 by gim               #+#    #+#             */
-/*   Updated: 2020/10/05 22:22:43 by gim              ###   ########.fr       */
+/*   Updated: 2020/10/05 23:36:20 by gim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ int					ft_read_file(int fd, char **line, char *buffer, char **backup)
 		else
 			*backup = ft_strjoin(*backup, buffer);
 		if (ft_get_line(backup, line))
-			break ;
+			return (1);
 	}
-	return (re > 0 ? 1 : 0);
+	return (0);
 }
 
 int					get_next_line(int fd, char **line)
@@ -66,13 +66,13 @@ int					get_next_line(int fd, char **line)
 		buffer[idx++] = '\0';
 	re = ft_read_file(fd, line, buffer, &backups[fd]);
 	free(buffer);
-	if (re != 0 || backups[fd] == NULL || backups[fd][0] == '\0')
+	if (!re)
 	{
-		if (!re && *line)
-			*line = NULL;
+		if (ft_get_line(&backups[fd], line))
+			return (1);
+		*line = backups[fd];
+		backups[fd] = NULL;
 		return (re);
 	}
-	*line = backups[fd];
-	backups[fd] = NULL;
-	return (1);
+	return (re);
 }
