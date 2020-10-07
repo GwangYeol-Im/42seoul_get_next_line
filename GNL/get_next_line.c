@@ -6,7 +6,7 @@
 /*   By: gim <gim@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 23:29:47 by gim               #+#    #+#             */
-/*   Updated: 2020/10/07 14:21:20 by gim              ###   ########.fr       */
+/*   Updated: 2020/10/07 14:35:01 by gim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int				get_next_line(int fd, char **line)
 	if (!re && backups[fd])
 	{
 		*line = ft_strdup(backups[fd]);
-		*backups[fd] = '\0';
+		ft_memset(backups[fd], 0, ft_strlen(backups[fd]));
 	}
 	return (re);
 }
