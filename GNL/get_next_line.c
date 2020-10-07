@@ -6,7 +6,7 @@
 /*   By: gim <gim@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 23:29:47 by gim               #+#    #+#             */
-/*   Updated: 2020/10/07 14:35:01 by gim              ###   ########.fr       */
+/*   Updated: 2020/10/07 14:42:29 by gim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ int				get_next_line(int fd, char **line)
 	char		buffer[BUFFER_SIZE + 1];
 	int			re;
 
-	if (!line || (fd < 0 || fd > FD_MAX) || (read(fd, backups[fd], 0) < 0))
+	if (!line || (fd < 0 || fd > FD_MAX) || (read(fd, backups[fd], 0) < 0) \
+		|| (BUFFER_SIZE <= 0))
 		return (-1);
 	if (backups[fd])
 		if (ft_get_line(&backups[fd], line))
