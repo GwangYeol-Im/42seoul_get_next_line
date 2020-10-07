@@ -6,7 +6,7 @@
 /*   By: gim <gim@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/04 22:03:54 by gim               #+#    #+#             */
-/*   Updated: 2020/10/05 22:28:07 by gim              ###   ########.fr       */
+/*   Updated: 2020/10/07 13:05:57 by gim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 int		get_next_line(int fd, char **line);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s1);
+void	*ft_memset(void *ptr, int value, size_t num);
 size_t	ft_strlen(const char *s);
 
 #endif

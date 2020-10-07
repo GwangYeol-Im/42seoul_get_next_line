@@ -12,7 +12,7 @@ int main (void)
     char    *lineadress[66];
 
     j = 1;
-    if (!(fd = open("4_newlines", O_RDONLY)))
+    if (!(fd = open("alphabet", O_RDONLY)))
     {
         printf("\nError in open\n");
         return (0);

@@ -6,7 +6,7 @@
 /*   By: gim <gim@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/04 22:04:02 by gim               #+#    #+#             */
-/*   Updated: 2020/10/05 22:27:56 by gim              ###   ########.fr       */
+/*   Updated: 2020/10/07 13:05:39 by gim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,16 @@ char		*ft_strjoin(char const *s1, char const *s2)
 		join[idx++] = *s2++;
 	join[idx] = '\0';
 	return (join);
+}
+
+void		*ft_memset(void *ptr, int value, size_t num)
+{
+	char	*temp;
+
+	temp = ptr;
+	while (num--)
+	{
+		*temp++ = (char)value;
+	}
+	return (ptr);
 }
