@@ -8,11 +8,11 @@ int main (void)
     int fd;
     int i;
     int j;
-    char    *line = 0;
+    char    *line;
     char    *lineadress[66];
 
     j = 1;
-    if (!(fd = open("alphabet", O_RDONLY)))
+    if (!(fd = open("test", O_RDONLY)))
     {
         printf("\nError in open\n");
         return (0);

@@ -6,7 +6,7 @@
 /*   By: gim <gim@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 23:29:47 by gim               #+#    #+#             */
-/*   Updated: 2020/10/07 14:42:29 by gim              ###   ########.fr       */
+/*   Updated: 2020/10/07 20:32:58 by gim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,23 +25,29 @@ int				ft_get_line(char **backup, char **line)
 		if (!temp[idx++])
 			return (0);
 	}
-	split = &temp[idx];
-	*split = '\0';
+	temp[idx] = '\0';
+	split = ft_strdup(&temp[idx + 1]);
 	*line = ft_strdup(*backup);
-	*backup = ft_strdup(split + 1);
+	free(*backup);
+	*backup = split;
 	return (1);
 }
 
 int				ft_read_file(int fd, char *buffer, char **line, char **backup)
 {
 	int			re;
+	char		*temp;
 
 	while ((re = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		if (!*backup)
 			*backup = ft_strdup(buffer);
 		else
-			*backup = ft_strjoin(*backup, buffer);
+		{
+			temp = ft_strjoin(*backup, buffer);
+			free(*backup);
+			*backup = temp;
+		}
 		if (ft_get_line(backup, line))
 			return (1);
 		ft_memset(buffer, 0, BUFFER_SIZE + 1);
@@ -63,10 +69,17 @@ int				get_next_line(int fd, char **line)
 			return (1);
 	ft_memset(buffer, 0, BUFFER_SIZE + 1);
 	re = ft_read_file(fd, buffer, line, &backups[fd]);
-	if (!re && backups[fd])
+	if (!re)
 	{
-		*line = ft_strdup(backups[fd]);
-		ft_memset(backups[fd], 0, ft_strlen(backups[fd]));
+		if (backups[fd])
+		{
+			*line = ft_strdup(backups[fd]);
+			ft_memset(backups[fd], 0, ft_strlen(backups[fd]));
+			free(backups[fd]);
+			backups[fd] = NULL;
+		}
+		else
+			*line = ft_strdup("");
 	}
 	return (re);
 }
