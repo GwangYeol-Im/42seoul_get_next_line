@@ -6,7 +6,7 @@
 /*   By: gim <gim@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 23:29:47 by gim               #+#    #+#             */
-/*   Updated: 2020/10/07 20:32:58 by gim              ###   ########.fr       */
+/*   Updated: 2020/10/10 00:48:07 by gim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,11 @@ int				ft_read_file(int fd, char *buffer, char **line, char **backup)
 int				get_next_line(int fd, char **line)
 {
 	static char	*backups[FD_MAX];
-	char		buffer[BUFFER_SIZE + 1];
+	char		*buffer;
 	int			re;
 
 	if (!line || (fd < 0 || fd > FD_MAX) || (read(fd, backups[fd], 0) < 0) \
-		|| (BUFFER_SIZE <= 0))
+		|| (BUFFER_SIZE <= 0) || !(buffer = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
 		return (-1);
 	if (backups[fd])
 		if (ft_get_line(&backups[fd], line))
