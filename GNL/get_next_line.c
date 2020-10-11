@@ -6,7 +6,7 @@
 /*   By: gim <gim@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/05 23:29:47 by gim               #+#    #+#             */
-/*   Updated: 2020/10/11 16:39:24 by gim              ###   ########.fr       */
+/*   Updated: 2020/10/07 20:32:58 by gim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ int				ft_read_file(int fd, char *buffer, char **line, char **backup)
 	int			re;
 	char		*temp;
 
-	ft_memset(buffer, 0, BS + 1);
-	while ((re = read(fd, buffer, BS)) > 0)
+	while ((re = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		if (!*backup)
 			*backup = ft_strdup(buffer);
@@ -51,7 +50,7 @@ int				ft_read_file(int fd, char *buffer, char **line, char **backup)
 		}
 		if (ft_get_line(backup, line))
 			return (1);
-		ft_memset(buffer, 0, BS + 1);
+		ft_memset(buffer, 0, BUFFER_SIZE + 1);
 	}
 	return (0);
 }
@@ -59,17 +58,17 @@ int				ft_read_file(int fd, char *buffer, char **line, char **backup)
 int				get_next_line(int fd, char **line)
 {
 	static char	*backups[FD_MAX];
-	static char	*buffer;
+	char		buffer[BUFFER_SIZE + 1];
 	int			re;
 
 	if (!line || (fd < 0 || fd > FD_MAX) || (read(fd, backups[fd], 0) < 0) \
-	|| (BS <= 0) || !(buffer = malloc(sizeof(char) * (BS + 1))))
+		|| (BUFFER_SIZE <= 0))
 		return (-1);
 	if (backups[fd])
 		if (ft_get_line(&backups[fd], line))
 			return (1);
+	ft_memset(buffer, 0, BUFFER_SIZE + 1);
 	re = ft_read_file(fd, buffer, line, &backups[fd]);
-	free(buffer);
 	if (!re)
 	{
 		if (backups[fd])
@@ -77,6 +76,7 @@ int				get_next_line(int fd, char **line)
 			*line = ft_strdup(backups[fd]);
 			ft_memset(backups[fd], 0, ft_strlen(backups[fd]));
 			free(backups[fd]);
+			backups[fd] = NULL;
 		}
 		else
 			*line = ft_strdup("");
