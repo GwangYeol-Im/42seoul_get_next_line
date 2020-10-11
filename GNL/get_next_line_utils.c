@@ -6,7 +6,7 @@
 /*   By: gim <gim@student.42seoul.kr>               +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/04 22:04:02 by gim               #+#    #+#             */
-/*   Updated: 2020/10/07 14:21:15 by gim              ###   ########.fr       */
+/*   Updated: 2020/10/11 17:45:00 by gim              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,11 @@ char		*ft_strjoin(char const *s1, char const *s2)
 void		*ft_memset(void *ptr, int value, size_t num)
 {
 	char	*temp;
+	size_t	max;
 
 	temp = ptr;
-	while (num--)
+	max = num > 100000 ? 100000 : num;
+	while (max--)
 	{
 		*temp++ = (char)value;
 	}
